@@ -5,13 +5,13 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
 pd.set_option('display.max_columns', None)
+df = pd.read_csv(r'C:\Users\stefa\PycharmProjects\ImmoScraper\ImmoScraper\listing_data.csv')
 
 # takes a csv of expose IDs and scrapes the requested data
 # filters out unique IDs first, to avoid double scraping
 # outputs a new CSV with all listing data
-# run from: main.py
+# run with: scrapy crawl fairly
 
-# to do:
 # fix no address given
 
 today = date.today()
@@ -32,8 +32,6 @@ http = 'https://www.'
 base_url = 'immobilienscout24.de'
 search_url = f"/Suche/de/{city}/{city}/wohnung-mieten?geocodes={','.join(geocodes)}"
 
-df = pd.read_csv(r'C:\Users\stefa\PycharmProjects\ImmoScraper\ImmoScraper\listing_data.csv')
-
 x_paths = {
     'listing_type': '//a[@class="breadcrumb__link"]/text()',
     'expose_url': '//head/link[@rel="canonical"]/@href',
@@ -53,7 +51,6 @@ x_paths = {
     'has_parking': '//dd[@class="is24qa-garage-stellplatz grid-item three-fifths"]/text()'
 }
 
-
 class ExposeSpider(CrawlSpider):
     name = 'fairly'
     allowed_domains = [base_url]
@@ -61,7 +58,6 @@ class ExposeSpider(CrawlSpider):
     rules = [
         Rule(
             LinkExtractor(
-                deny='neubau/',
                 restrict_xpaths='//a[@class="icon-arrow-forward"]'
             ),
             callback='parse_search_pages',
