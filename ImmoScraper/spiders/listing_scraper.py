@@ -79,8 +79,7 @@ class ExposeSpider(CrawlSpider):
 
     def parse_listing(self, response):
         temp_dict = {
-            'date_scraped': today,
-            'listing_type': 'W mieten' #if correct, should become: 'Wohnung mieten'
+            'date_scraped': today
         }
         for var in x_paths.keys():
             if response.xpath(x_paths[var]):
