@@ -9,8 +9,9 @@ pd.set_option('display.max_columns', None)
 # takes a csv of expose IDs and scrapes the requested data
 # filters out unique IDs first, to avoid double scraping
 # outputs a new CSV with all listing data
-# run with: scrapy crawl fairly
+# run from: main.py
 
+# to do:
 # fix no address given
 
 today = date.today()
