@@ -13,17 +13,13 @@ def strip_whitespace(d):
     return {
         key: (value.strip() if value is not None else value) for key, value in d.items()
     }
-#
-#
+
 def strip_nums(value):
     clean = ''
     for i in value:
         if i in nums or i == ',':
             clean += i
     return clean
-
-
-
 
 class ImmoscraperPipeline:
     def process_item(self, item, spider):
