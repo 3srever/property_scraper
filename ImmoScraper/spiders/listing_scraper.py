@@ -74,9 +74,7 @@ class ExposeSpider(CrawlSpider):
                 yield scrapy.Request(full_url, callback=self.parse_listing)
 
     def parse_listing(self, response):
-        temp_dict = {
-            'date_scraped': today
-        }
+        temp_dict = {'date_scraped': today}
         for var in x_paths.keys():
             if response.xpath(x_paths[var]):
                 temp_dict[var] = response.xpath(x_paths[var]).extract_first()
