@@ -27,14 +27,14 @@ CONCURRENT_REQUESTS = 32
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 1
 
 # Enable logging
 LOG_ENABLED = True
 
 # Set output format & storage location
 FEEDS = {
-    'listing_data.csv': {
+    'listing_data_01-06-20.csv': {
         'format': 'csv'
     }
 }
@@ -79,9 +79,9 @@ COOKIES_ENABLED = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#     'ImmoScraper.pipelines.ImmoscraperPipeline': 300,
-# }
+ITEM_PIPELINES = {
+    'ImmoScraper.pipelines.ImmoscraperPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

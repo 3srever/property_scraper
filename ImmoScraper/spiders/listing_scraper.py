@@ -1,8 +1,8 @@
 from datetime import date
+import pandas as pd
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-import pandas as pd
 
 pd.set_option('display.max_columns', None)
 
@@ -11,7 +11,7 @@ pd.set_option('display.max_columns', None)
 # outputs a new CSV with all listing data
 # run with: scrapy crawl fairly
 
-# to do, add item pipelines that clean the data
+# fix no address given
 
 today = date.today()
 today = today.strftime("%d/%m/%Y")
@@ -24,19 +24,17 @@ geocodes = [
     "1276003001034",  # xberg
     "1276003001046",  # mitte
     "1276003001073",  # wedding
-    "1276003001068"  # moabit
+    "1276003001068"   # moabit
 ]
 
 http = 'https://www.'
 base_url = 'immobilienscout24.de'
-expose_url = '/expose'
 search_url = f"/Suche/de/{city}/{city}/wohnung-mieten?geocodes={','.join(geocodes)}"
 
-df = pd.read_csv(r'C:\Users\stefa\PycharmProjects\ImmoScraper\listing_data.csv')
-df = df.drop_duplicates(subset='expose_url')
-df.to_csv(r'C:\Users\stefa\PycharmProjects\ImmoScraper\listing_data.csv', index=False)
+df = pd.read_csv(r'C:\Users\stefa\PycharmProjects\ImmoScraper\ImmoScraper\listing_data.csv')
 
 x_paths = {
+    'listing_type': '//a[@class="breadcrumb__link"]/text()',
     'expose_url': '//head/link[@rel="canonical"]/@href',
     'title': '//div[@class="criteriagroup "]/h1/text()',
     'street': '//div[@class="address-block"]/div/span[@class="block font-nowrap print-hide"]/text()',
@@ -77,13 +75,18 @@ class ExposeSpider(CrawlSpider):
             exists = df['expose_url'].str.contains(item).any()
             if 'neubau' not in item and not exists:
                 yield scrapy.Request(full_url, callback=self.parse_listing)
-            else:
-                pass
 
     def parse_listing(self, response):
-        temp_dict = {'date_scraped': today}
+        temp_dict = {
+            'date_scraped': today,
+            'listing_type': 'W mieten' #if correct, should become: 'Wohnung mieten'
+        }
         for var in x_paths.keys():
-            temp_dict[var] = response.xpath(x_paths[var]).extract_first()
+            if response.xpath(x_paths[var]):
+                temp_dict[var] = response.xpath(x_paths[var]).extract_first()
+            else:
+                temp_dict[var] = None
         yield temp_dict
 
     parse_start_url = parse_search_pages
+
