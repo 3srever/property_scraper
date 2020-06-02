@@ -12,7 +12,9 @@ df = pd.read_csv(r'C:\Users\stefa\PycharmProjects\ImmoScraper\ImmoScraper\listin
 # outputs a new CSV with all listing data
 # run with: scrapy crawl fairly
 
-# fix no address given
+# make a new scraper for immowelt.de
+# create regression algo
+# clean remaining non-numerical data
 
 today = date.today()
 today = today.strftime("%d/%m/%Y")
@@ -48,7 +50,9 @@ x_paths = {
     'object_condition': '//dd[@class="is24qa-objektzustand grid-item three-fifths"]/text()',
     'heating_type': '//dd[@class="is24qa-heizungsart grid-item three-fifths"]/text()',
     'pets_allowed': '//dd[@class="is24qa-haustiere grid-item three-fifths"]/text()',
-    'has_parking': '//dd[@class="is24qa-garage-stellplatz grid-item three-fifths"]/text()'
+    'has_parking': '//dd[@class="is24qa-garage-stellplatz grid-item three-fifths"]/text()',
+    'parking_rent': '//dd[@class="is24qa-miete-fuer-garagestellplatz grid-item three-fifths"]/text()',
+    'deposit': '//div[@class="is24qa-kaution-o-genossenschaftsanteile"]/text()'
 }
 
 class ExposeSpider(CrawlSpider):
@@ -74,7 +78,9 @@ class ExposeSpider(CrawlSpider):
                 yield scrapy.Request(full_url, callback=self.parse_listing)
 
     def parse_listing(self, response):
-        temp_dict = {'date_scraped': today}
+        temp_dict = {
+            'date_scraped': today
+        }
         for var in x_paths.keys():
             if response.xpath(x_paths[var]):
                 temp_dict[var] = response.xpath(x_paths[var]).extract_first()
