@@ -34,7 +34,7 @@ LOG_ENABLED = True
 
 # Set output format & storage location
 FEEDS = {
-    'listing_data_01-06-20.csv': {
+    'listing_data.csv': {
         'format': 'csv'
     }
 }
