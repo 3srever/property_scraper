@@ -30,6 +30,8 @@ geocodes = [
     "1276003001068"   # moabit
 ]
 
+#https://www.immobilienscout24.de/Suche/de/berlin/berlin/wohnung-mieten?geocodes=1276003001046,1276003001034,1276003001068,1276003001054,1276003001017,1276003001048&enteredFrom=result_list
+
 http = 'https://www.'
 base_url = 'immobilienscout24.de'
 search_url = f"/Suche/de/{city}/{city}/wohnung-mieten?geocodes={','.join(geocodes)}"
