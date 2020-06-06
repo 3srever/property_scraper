@@ -38,7 +38,7 @@ def strip_deposit(value):
     clean = clean.replace(',', '.')
     return clean[::-1]
 
-class ImmoscraperPipeline:
+class ImmoscoutPipeline:
     def process_item(self, item, spider):
 
         temp_dict = strip_whitespace(item)

@@ -80,7 +80,7 @@ COOKIES_ENABLED = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'ImmoScraper.pipelines.ImmoscraperPipeline': 300,
+    'ImmoScraper.pipelines.ImmoscoutPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
